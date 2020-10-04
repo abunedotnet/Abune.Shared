@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ReliableUdpMessaging.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+// <copyright file="ReliableUdpMessaging.cs" company="Thomas Stollenwerk (motmot80)">
+// Copyright (c) Thomas Stollenwerk (motmot80). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ namespace Abune.Shared.Util
         private const int MAXUNACKEDMESSAGES = 20;
         private readonly TimeSpan sendRetryInterval = TimeSpan.FromMilliseconds(50);
 
-        private uint sequenceId = 0;
+        private uint sequenceId;
         private System.Collections.Concurrent.ConcurrentQueue<UdpMessage> pendingMessages = new System.Collections.Concurrent.ConcurrentQueue<UdpMessage>();
         private ConcurrentDictionary<uint, MessageEntry> unAckedMessages = new ConcurrentDictionary<uint, MessageEntry>();
         private System.Collections.Concurrent.ConcurrentQueue<UdpMessage> pendingAckMessages = new System.Collections.Concurrent.ConcurrentQueue<UdpMessage>();
@@ -212,12 +212,12 @@ namespace Abune.Shared.Util
 
         private bool IsMessagePending()
         {
-            return this.pendingAckMessages.Count > 0 || this.unAckedMessages.Count > 0 || this.pendingMessages.Count > 0;
+            return !this.pendingAckMessages.IsEmpty || !this.unAckedMessages.IsEmpty || !this.pendingMessages.IsEmpty;
         }
 
         private void AppendAckMessages(MemoryStream memstrm)
         {
-            while (this.pendingAckMessages.Count > 0)
+            while (!this.pendingAckMessages.IsEmpty)
             {
                 UdpMessage udpMessageToAck;
                 if (!this.pendingAckMessages.TryPeek(out udpMessageToAck))
@@ -274,7 +274,7 @@ namespace Abune.Shared.Util
 
         private void AppendPendingMessages(MemoryStream memstrm)
         {
-            while (this.pendingMessages.Count > 0)
+            while (!this.pendingMessages.IsEmpty)
             {
                 UdpMessage udpMessage;
                 if (!this.pendingMessages.TryPeek(out udpMessage))

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="MessageControlFlags.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+// <copyright file="MessageControlFlags.cs" company="Thomas Stollenwerk (motmot80)">
+// Copyright (c) Thomas Stollenwerk (motmot80). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 #pragma warning disable CA1716
@@ -48,7 +48,9 @@ namespace Abune.Shared.Protocol
         /// Quality of service "none" - 0b0000_0000
         /// [...] followed by [PAYLOAD].
         /// </summary>
+#pragma warning disable CA1069 // Enumerationswerte dürfen nicht dupliziert werden
         QOS0 = 0x0,
+#pragma warning restore CA1069 // Enumerationswerte dürfen nicht dupliziert werden
 
         /// <summary>
         /// Quality of service "at least once" - 0b0001_0000

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Locator.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+// <copyright file="Locator.cs" company="Thomas Stollenwerk (motmot80)">
+// Copyright (c) Thomas Stollenwerk (motmot80). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 #pragma warning disable CA1716
@@ -111,9 +111,10 @@ namespace Abune.Shared.Util
 
         private static ulong GetAreaId(float x, float y, float z)
         {
-            ulong areaId = (ulong)((z + MAXPOSITION) / AREASIZE)
-                           + (ulong)((y + MAXPOSITION) / AREASIZE) * (ulong)MAXPOSITION
-                           + (ulong)((x + MAXPOSITION) / AREASIZE) * ((ulong)MAXPOSITION * (ulong)MAXPOSITION);
+            ulong zPart = (ulong)((z + MAXPOSITION) / AREASIZE);
+            ulong yPart = (ulong)((y + MAXPOSITION) / AREASIZE) * (ulong)MAXPOSITION;
+            ulong xPart = (ulong)((x + MAXPOSITION) / AREASIZE) * ((ulong)MAXPOSITION * (ulong)MAXPOSITION);
+            ulong areaId = zPart + yPart + xPart;
             return areaId;
         }
     }
