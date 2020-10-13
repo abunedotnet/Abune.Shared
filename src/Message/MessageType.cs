@@ -18,19 +18,25 @@ namespace Abune.Shared.Message
         /// <summary>Server hello frame.</summary>
         ServerHello = 0x02,
 
+        /// <summary>The server authentication request.</summary>
+        ServerAuthenticationRequest = 0x03,
+
+        /// <summary>The client authentication response.</summary>
+        ClientAuthenticationResponse = 0x04,
+
         /// <summary>Client ping request.</summary>
-        ClientPing = 0x03,
+        ClientPing = 0x05,
 
         /// <summary>Server pong response.</summary>
-        ServerPong = 0x04,
+        ServerPong = 0x06,
 
         /// <summary>Server ping request.</summary>
-        ServerPing = 0x05,
+        ServerPing = 0x07,
 
         /// <summary>Client pong response.</summary>
-        ClientPong = 0x06,
+        ClientPong = 0x08,
 
         /// <summary>Containing message with commands.</summary>
-        Message = 0x07,
+        Message = 0x09,
     }
 }

@@ -30,6 +30,9 @@ namespace Abune.Shared.Message
                     byte messageLength = br.ReadByte();
                     byte[] messageBytes = br.ReadBytes(messageLength);
                     this.Message = Encoding.UTF8.GetString(messageBytes);
+                    byte versionLength = br.ReadByte();
+                    byte[] versionBytes = br.ReadBytes(versionLength);
+                    this.Version = Encoding.UTF8.GetString(versionBytes);
                 }
             }
         }
@@ -48,11 +51,16 @@ namespace Abune.Shared.Message
         /// <value>The message.</value>
         public string Message { get; set; }
 
+        /// <summary>Gets or sets the client version.</summary>
+        /// <value>The client version.</value>
+        public string Version { get; set; }
+
         /// <summary>Serializes this instance.</summary>
         /// <returns>Byte serialized instance.</returns>
         public byte[] Serialize()
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(this.Message);
+            byte[] versionBytes = Encoding.UTF8.GetBytes(this.Version);
             using (MemoryStream stream = new MemoryStream(sizeof(uint) + messageBytes.Length))
             {
                 using (BinaryWriter bw = new BinaryWriter(stream))
@@ -61,6 +69,8 @@ namespace Abune.Shared.Message
                     bw.Write(this.ClientPort);
                     bw.Write((byte)messageBytes.Length);
                     bw.Write(messageBytes);
+                    bw.Write((byte)versionBytes.Length);
+                    bw.Write(versionBytes);
                 }
 
                 stream.Flush();
