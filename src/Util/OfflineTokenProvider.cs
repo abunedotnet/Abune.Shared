@@ -10,6 +10,7 @@ namespace Abune.Shared.Util
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Text;
+    using Abune.Shared.Command;
     using Microsoft.IdentityModel.Tokens;
 
     /// <summary>Provides OAuth tokens in offline szenarios.</summary>
@@ -39,11 +40,10 @@ namespace Abune.Shared.Util
             tokenDesciptor.Issuer = "abune";
             tokenDesciptor.IssuedAt = DateTime.UtcNow;
             tokenDesciptor.Subject = new System.Security.Claims.ClaimsIdentity();
+            tokenDesciptor.Subject.AddClaim(new System.Security.Claims.Claim(AuthenticationConstants.JwtClaims.AUTHENTICATIONCHALLENGE, authenticationChallenge));
             tokenDesciptor.Audience = "abune.server";
             tokenDesciptor.SigningCredentials = new SigningCredentials(this.signingKey, "HS256");
             tokenDesciptor.Expires = expires;
-            tokenDesciptor.AdditionalHeaderClaims = new Dictionary<string, object>();
-            tokenDesciptor.AdditionalHeaderClaims.Add("challenge", authenticationChallenge);
             return tokenHandler.CreateEncodedJwt(tokenDesciptor);
         }
     }
