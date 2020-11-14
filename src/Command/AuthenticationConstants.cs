@@ -27,7 +27,7 @@ namespace Abune.Shared.Command
             /// <summary>
             /// The authentication challenge.
             /// </summary>
-            public const string AUTHENTICATIONCHALLENGE = "abn.cha";
+            public const string AUTHENTICATIONCHALLENGE = "abnch";
         }
     }
 }
