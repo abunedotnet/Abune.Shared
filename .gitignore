@@ -4,5 +4,9 @@
 **/obj
 **/publish
 **/*.user
-
+**/*.meta
+**/build
+**/library
+**/temp
+**/Logs
 
