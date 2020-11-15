@@ -1,21 +1,17 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="AuthenticationConstants.cs" company="Thomas Stollenwerk (motmot80)">
+// <copyright file="Auth.cs" company="Thomas Stollenwerk (motmot80)">
 // Copyright (c) Thomas Stollenwerk (motmot80). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 
 #pragma warning disable CA1716
 
-namespace Abune.Shared.Command
+namespace Abune.Shared.Constants
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// Constants for authentication.
     /// </summary>
-    public static class AuthenticationConstants
+    public static class Auth
     {
         /// <summary>
         /// Constants for jwt claims.
