@@ -3,13 +3,14 @@
 // Copyright (c) Thomas Stollenwerk (motmot80). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+#pragma warning disable CA1716
 
 namespace Assets.Abune.Client.Unity.Shared.Util.Contract
 {
     using System;
 
     /// <summary>
-    /// Interface for token proider
+    /// Interface for token provider.
     /// </summary>
     public interface ITokenProvider
     {
