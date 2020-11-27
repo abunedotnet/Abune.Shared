@@ -9,6 +9,7 @@ namespace Abune.Shared.Util
 {
     using System;
     using System.Collections.Generic;
+    using Abune.Shared.DataType;
 
     /// <summary>Implementation to locate areas and objects.</summary>
     public static class Locator
@@ -23,12 +24,14 @@ namespace Abune.Shared.Util
         public const float MAXPOSITION = MAXAREASIZE / 2.0f;
 
         /// <summary>Gets the area identifier from world position.</summary>
-        /// <param name="x">The x position.</param>
-        /// <param name="y">The y position.</param>
-        /// <param name="z">The z position.</param>
+        /// <param name="worldPosition">The world position.</param>
         /// <returns>The area identifier.</returns>
-        public static ulong GetAreaIdFromWorldPosition(float x, float y, float z)
+        public static ulong GetAreaIdFromWorldPosition(AVector3 worldPosition)
         {
+            float x = worldPosition.X;
+            float y = worldPosition.Y;
+            float z = worldPosition.Z;
+
             if (Math.Abs(x) > MAXPOSITION)
             {
                 x = x > 0 ? MAXPOSITION : -MAXPOSITION;
@@ -48,18 +51,14 @@ namespace Abune.Shared.Util
         }
 
         /// <summary>Gets all area identifiers within the given world boundaries.</summary>
-        /// <param name="minX">The minimum x position.</param>
-        /// <param name="minY">The minimum y position.</param>
-        /// <param name="minZ">The minimum z position.</param>
-        /// <param name="maxX">The maximum x position.</param>
-        /// <param name="maxY">The maximum y position.</param>
-        /// <param name="maxZ">The maximum z position.</param>
+        /// <param name="min">The minimum world position.</param>
+        /// <param name="max">The maximum world  position.</param>
         /// <returns>List of area identifiers.</returns>
-        public static List<ulong> GetAreaIdsWithinWorldBoundaries(float minX, float minY, float minZ, float maxX, float maxY, float maxZ)
+        public static List<ulong> GetAreaIdsWithinWorldBoundaries(AVector3 min, AVector3 max)
         {
             List<ulong> areas = new List<ulong>();
-            ulong minArea = GetAreaIdFromWorldPosition(minX, minY, minZ);
-            ulong maxArea = GetAreaIdFromWorldPosition(maxX, maxY, maxZ);
+            ulong minArea = GetAreaIdFromWorldPosition(min);
+            ulong maxArea = GetAreaIdFromWorldPosition(max);
             ulong minXPart, minYPart, minZPart, maxXPart, maxYPart, maxZPart;
             GetPartsFromAreaId(minArea, out minXPart, out minYPart, out minZPart);
             GetPartsFromAreaId(maxArea, out maxXPart, out maxYPart, out maxZPart);

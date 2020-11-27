@@ -56,13 +56,5 @@ namespace Abune.Shared.Command
         /// Deletes an object value.
         /// </summary>
         ObjectValueRemove = 0x15,
-
-        /// <summary>
-        /// Object is colliding with object.
-        /// </summary>
-        /// <remarks>
-        /// For future use.
-        /// </remarks>
-        ObjectCollision = 0x16,
     }
 }

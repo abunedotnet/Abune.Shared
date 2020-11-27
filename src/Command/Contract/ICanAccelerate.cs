@@ -7,39 +7,21 @@
 #pragma warning disable CA1716
 namespace Abune.Shared.Command.Contract
 {
+    using Abune.Shared.DataType;
+
     /// <summary>
     /// Interface for things that could accelerate.
     /// </summary>
     public interface ICanAccelerate
     {
         /// <summary>
-        /// Gets the velocity on x axis in units per second.
+        /// Gets the velocity in units per second.
         /// </summary>
-        float VelocityX { get; }
+        AVector3 Velocity { get; }
 
         /// <summary>
-        /// Gets the velocity on y axis in units per second.
+        /// Gets the angular velocity in radiants per second.
         /// </summary>
-        float VelocityY { get; }
-
-        /// <summary>
-        /// Gets the velocity on z axis in units per second.
-        /// </summary>
-        float VelocityZ { get; }
-
-        /// <summary>
-        /// Gets the angular velocity on x axis in radiants per second.
-        /// </summary>
-        float AngularVelocityX { get; }
-
-        /// <summary>
-        /// Gets the angular velocity on x axis in radiants per second.
-        /// </summary>
-        float AngularVelocityY { get; }
-
-        /// <summary>
-        /// Gets the angular velocity on x axis in radiants per second.
-        /// </summary>
-        float AngularVelocityZ { get; }
+        AVector3 AngularVelocity { get; }
     }
 }

@@ -9,6 +9,7 @@ namespace Abune.Shared.Command
     using System;
     using System.IO;
     using Abune.Shared.Command.Contract;
+    using Abune.Shared.DataType;
 
     /// <summary>
     /// Command class for object destruction.
@@ -45,9 +46,7 @@ namespace Abune.Shared.Command
                 {
                     this.FrameTick = br.ReadUInt64();
                     this.ObjectId = br.ReadUInt64();
-                    this.TargetPositionX = br.ReadSingle();
-                    this.TargetPositionY = br.ReadSingle();
-                    this.TargetPositionZ = br.ReadSingle();
+                    this.TargetPosition = ReadVector3(br);
                 }
 
                 stream.Flush();
@@ -58,17 +57,13 @@ namespace Abune.Shared.Command
         /// <summary>Initializes a new instance of the <see cref="ObjectDestroyCommand" /> class.</summary>
         /// <param name="frameTick">The frame tick.</param>
         /// <param name="objectId">The object identifier.</param>
-        /// <param name="targetPositionX">The target position x.</param>
-        /// <param name="targetPositionY">The target position y.</param>
-        /// <param name="targetPositionZ">The target position z.</param>
-        public ObjectDestroyCommand(ulong frameTick, ulong objectId, float targetPositionX, float targetPositionY, float targetPositionZ)
+        /// <param name="targetPosition">The target position.</param>
+        public ObjectDestroyCommand(ulong frameTick, ulong objectId, AVector3 targetPosition)
             : base(CommandType.ObjectDestroy)
         {
             this.FrameTick = frameTick;
             this.ObjectId = objectId;
-            this.TargetPositionX = targetPositionX;
-            this.TargetPositionY = targetPositionY;
-            this.TargetPositionZ = targetPositionZ;
+            this.TargetPosition = targetPosition;
             int sizeUlongs = sizeof(ulong) * 2;
             int sizeFloats = sizeof(float) * 3;
             using (MemoryStream stream = new MemoryStream(sizeUlongs + sizeFloats))
@@ -77,9 +72,7 @@ namespace Abune.Shared.Command
                 {
                     bw.Write(this.FrameTick);
                     bw.Write(this.ObjectId);
-                    bw.Write(this.TargetPositionX);
-                    bw.Write(this.TargetPositionY);
-                    bw.Write(this.TargetPositionZ);
+                    Write(bw, this.TargetPosition);
                 }
 
                 stream.Flush();
@@ -97,40 +90,14 @@ namespace Abune.Shared.Command
 
         /// <summary>Gets or sets the target position x.</summary>
         /// <value>The target position x.</value>
-        public float TargetPositionX { get; set; }
-
-        /// <summary>Gets or sets the target position y.</summary>
-        /// <value>The target position y.</value>
-        public float TargetPositionY { get; set; }
-
-        /// <summary>Gets or sets the target position z.</summary>
-        /// <value>The target position z.</value>
-        public float TargetPositionZ { get; set; }
+        public AVector3 TargetPosition { get; set; }
 
         /// <summary>Gets the world position x axis.</summary>
-        public float WorldPositionX
+        public AVector3 WorldPosition
         {
             get
             {
-                return this.TargetPositionX;
-            }
-        }
-
-        /// <summary>Gets the world position y axis.</summary>
-        public float WorldPositionY
-        {
-            get
-            {
-                return this.TargetPositionY;
-            }
-        }
-
-        /// <summary>Gets the world position z axis.</summary>
-        public float WorldPositionZ
-        {
-            get
-            {
-                return this.TargetPositionZ;
+                return this.TargetPosition;
             }
         }
     }
