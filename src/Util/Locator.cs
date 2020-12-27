@@ -51,22 +51,22 @@ namespace Abune.Shared.Util
         }
 
         /// <summary>Gets all area identifiers within the given world boundaries.</summary>
-        /// <param name="min">The minimum world position.</param>
-        /// <param name="max">The maximum world  position.</param>
+        /// <param name="a">The world position start.</param>
+        /// <param name="b">The world position end.</param>
         /// <returns>List of area identifiers.</returns>
-        public static List<ulong> GetAreaIdsWithinWorldBoundaries(AVector3 min, AVector3 max)
+        public static List<ulong> GetAreaIdsWithinWorldBoundaries(AVector3 a, AVector3 b)
         {
             List<ulong> areas = new List<ulong>();
-            ulong minArea = GetAreaIdFromWorldPosition(min);
-            ulong maxArea = GetAreaIdFromWorldPosition(max);
-            ulong minXPart, minYPart, minZPart, maxXPart, maxYPart, maxZPart;
-            GetPartsFromAreaId(minArea, out minXPart, out minYPart, out minZPart);
-            GetPartsFromAreaId(maxArea, out maxXPart, out maxYPart, out maxZPart);
-            for (ulong xPart = minXPart; xPart <= maxXPart; xPart++)
+            ulong aArea = GetAreaIdFromWorldPosition(a);
+            ulong bArea = GetAreaIdFromWorldPosition(b);
+            ulong aXPart, aYPart, aZPart, bXPart, bYPart, bZPart;
+            GetPartsFromAreaId(aArea, out aXPart, out aYPart, out aZPart);
+            GetPartsFromAreaId(bArea, out bXPart, out bYPart, out bZPart);
+            for (ulong xPart = Math.Min(aXPart, bXPart); xPart <= Math.Max(aXPart, bXPart); xPart++)
             {
-                for (ulong yPart = minYPart; yPart <= maxYPart; yPart++)
+                for (ulong yPart = Math.Min(aYPart, bYPart); yPart <= Math.Max(aYPart, bYPart); yPart++)
                 {
-                    for (ulong zPart = minZPart; zPart <= maxZPart; zPart++)
+                    for (ulong zPart = Math.Min(aZPart, bZPart); zPart <= Math.Max(aZPart, bZPart); zPart++)
                     {
                         ulong areaId = zPart + (yPart * (ulong)MAXPOSITION) + (xPart * (ulong)MAXPOSITION * (ulong)MAXPOSITION);
                         areas.Add(areaId);

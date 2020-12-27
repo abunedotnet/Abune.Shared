@@ -8,9 +8,10 @@ namespace Abune.Shared.Command
 {
     using System;
     using System.IO;
+    using Abune.Shared.Command.Contract;
 
     /// <summary>Update value of object command.</summary>
-    public class ObjectValueUpdateCommand : BaseCommand
+    public class ObjectValueUpdateCommand : BaseCommand, IObjectCommand
     {
         /// <summary>Initializes a new instance of the <see cref="ObjectValueUpdateCommand" /> class.</summary>
         public ObjectValueUpdateCommand()

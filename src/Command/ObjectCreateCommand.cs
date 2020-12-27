@@ -14,7 +14,7 @@ namespace Abune.Shared.Command
     /// <summary>
     /// Object create command.
     /// </summary>
-    public class ObjectCreateCommand : BaseCommand, ICanLocate, ICanRotate
+    public class ObjectCreateCommand : BaseCommand, ICanLocate, ICanRotate, IObjectCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectCreateCommand"/> class.

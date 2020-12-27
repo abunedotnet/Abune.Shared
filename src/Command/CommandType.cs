@@ -56,5 +56,15 @@ namespace Abune.Shared.Command
         /// Deletes an object value.
         /// </summary>
         ObjectValueRemove = 0x15,
+
+        /// <summary>
+        /// Event at a point.
+        /// </summary>
+        EventPoint = 0x16,
+
+        /// <summary>
+        /// Event with start and end.
+        /// </summary>
+        EventLine = 0x17,
     }
 }

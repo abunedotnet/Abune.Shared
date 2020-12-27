@@ -14,7 +14,7 @@ namespace Abune.Shared.Command
     /// <summary>
     /// Command class for object destruction.
     /// </summary>
-    public class ObjectDestroyCommand : BaseCommand, ICanLocate
+    public class ObjectDestroyCommand : BaseCommand, ICanLocate, IObjectCommand
     {
         /// <summary>Initializes a new instance of the <see cref="ObjectDestroyCommand" /> class.</summary>
         public ObjectDestroyCommand()

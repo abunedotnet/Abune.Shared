@@ -8,9 +8,10 @@ namespace Abune.Shared.Command
 {
     using System;
     using System.IO;
+    using Abune.Shared.Command.Contract;
 
     /// <summary>Command to lock objects.</summary>
-    public class ObjectLockCommand : BaseCommand
+    public class ObjectLockCommand : BaseCommand, IObjectCommand
     {
         /// <summary>Initializes a new instance of the <see cref="ObjectLockCommand" /> class.</summary>
         public ObjectLockCommand()

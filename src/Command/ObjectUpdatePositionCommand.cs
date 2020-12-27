@@ -12,7 +12,7 @@ namespace Abune.Shared.Command
     using Abune.Shared.DataType;
 
     /// <summary>Update object position.</summary>
-    public class ObjectUpdatePositionCommand : BaseCommand, ICanLocate, ICanRotate, ICanAccelerate
+    public class ObjectUpdatePositionCommand : BaseCommand, ICanLocate, ICanRotate, ICanAccelerate, IObjectCommand
     {
         /// <summary>Initializes a new instance of the <see cref="ObjectUpdatePositionCommand" /> class.</summary>
         public ObjectUpdatePositionCommand()
@@ -42,6 +42,7 @@ namespace Abune.Shared.Command
             {
                 using (BinaryReader br = new BinaryReader(stream))
                 {
+                    this.ObjectId = br.ReadUInt64();
                     this.TargetPosition = ReadVector3(br);
                     this.TargetOrientation = ReadQuaternion(br);
                     this.Velocity = ReadVector3(br);
@@ -56,26 +57,30 @@ namespace Abune.Shared.Command
         }
 
         /// <summary>Initializes a new instance of the <see cref="ObjectUpdatePositionCommand" /> class.</summary>
+        /// <param name="objectId">The object identifier.</param>
         /// <param name="targetPosition">The target position x.</param>
         /// <param name="targetOrientation">The quaternion .</param>
         /// <param name="startFrameTick">The start frame tick.</param>
         /// <param name="stopFrameTick">The stop frame tick.</param>
         public ObjectUpdatePositionCommand(
+            ulong objectId,
             AVector3 targetPosition,
             AQuaternion targetOrientation,
             ulong startFrameTick,
             ulong stopFrameTick)
             : this(
-            targetPosition,
-            targetOrientation,
-            AVector3.Zero,
-            AVector3.Zero,
-            startFrameTick,
-            stopFrameTick)
+                objectId,
+                targetPosition,
+                targetOrientation,
+                AVector3.Zero,
+                AVector3.Zero,
+                startFrameTick,
+                stopFrameTick)
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="ObjectUpdatePositionCommand" /> class.</summary>
+        /// <param name="objectId">The object identifier.</param>
         /// <param name="targetPosition">The target position.</param>
         /// <param name="targetOrientation">The quaternion.</param>
         /// <param name="velocity">The velocity.</param>
@@ -83,6 +88,7 @@ namespace Abune.Shared.Command
         /// <param name="startFrameTick">The start frame tick.</param>
         /// <param name="stopFrameTick">The stop frame tick.</param>
         public ObjectUpdatePositionCommand(
+            ulong objectId,
             AVector3 targetPosition,
             AQuaternion targetOrientation,
             AVector3 velocity,
@@ -91,6 +97,7 @@ namespace Abune.Shared.Command
             ulong stopFrameTick)
             : base(CommandType.ObjectUpdatePosition)
         {
+            this.ObjectId = objectId;
             this.TargetPosition = targetPosition;
             this.TargetOrientation = targetOrientation;
             this.Velocity = velocity;
@@ -104,6 +111,7 @@ namespace Abune.Shared.Command
             {
                 using (BinaryWriter bw = new BinaryWriter(stream))
                 {
+                    bw.Write(this.ObjectId);
                     Write(bw, this.TargetPosition);
                     Write(bw, this.TargetOrientation);
                     Write(bw, this.Velocity);
@@ -116,6 +124,10 @@ namespace Abune.Shared.Command
                 this.Body = stream.ToArray();
             }
         }
+
+        /// <summary>Gets or sets the object identifier.</summary>
+        /// <value>The object identifier.</value>
+        public ulong ObjectId { get; set; }
 
         /// <summary>Gets or sets the target position.</summary>
         /// <value>The target position.</value>

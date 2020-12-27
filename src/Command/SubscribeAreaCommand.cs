@@ -8,9 +8,10 @@ namespace Abune.Shared.Command
 {
     using System;
     using System.IO;
+    using Abune.Shared.Command.Contract;
 
     /// <summary>Subscribe client to area command.</summary>
-    public class SubscribeAreaCommand : BaseCommand
+    public class SubscribeAreaCommand : BaseCommand, IAreaCommand
     {
         /// <summary>Initializes a new instance of the <see cref="SubscribeAreaCommand" /> class.</summary>
         public SubscribeAreaCommand()

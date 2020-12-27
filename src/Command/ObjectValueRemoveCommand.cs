@@ -8,9 +8,10 @@ namespace Abune.Shared.Command
 {
     using System;
     using System.IO;
+    using Abune.Shared.Command.Contract;
 
     /// <summary>Remove value from object command.</summary>
-    public class ObjectValueRemoveCommand : BaseCommand
+    public class ObjectValueRemoveCommand : BaseCommand, IObjectCommand
     {
         /// <summary>Initializes a new instance of the <see cref="ObjectValueRemoveCommand" /> class.</summary>
         public ObjectValueRemoveCommand()
