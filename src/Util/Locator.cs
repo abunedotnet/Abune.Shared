@@ -59,9 +59,8 @@ namespace Abune.Shared.Util
             List<ulong> areas = new List<ulong>();
             ulong aArea = GetAreaIdFromWorldPosition(a);
             ulong bArea = GetAreaIdFromWorldPosition(b);
-            ulong aXPart, aYPart, aZPart, bXPart, bYPart, bZPart;
-            GetPartsFromAreaId(aArea, out aXPart, out aYPart, out aZPart);
-            GetPartsFromAreaId(bArea, out bXPart, out bYPart, out bZPart);
+            GetPartsFromAreaId(aArea, out var aXPart, out var aYPart, out var aZPart);
+            GetPartsFromAreaId(bArea, out var bXPart, out var bYPart, out var bZPart);
             for (ulong xPart = Math.Min(aXPart, bXPart); xPart <= Math.Max(aXPart, bXPart); xPart++)
             {
                 for (ulong yPart = Math.Min(aYPart, bYPart); yPart <= Math.Max(aYPart, bYPart); yPart++)
