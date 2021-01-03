@@ -9,6 +9,7 @@ namespace Abune.Shared.Protocol
     using System;
     using System.IO;
     using Abune.Shared.Message;
+    using Abune.Shared.Message.Contract;
 
     /// <summary>Transfer frame udp frame.</summary>
     public class UdpTransferFrame

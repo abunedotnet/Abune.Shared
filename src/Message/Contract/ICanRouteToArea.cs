@@ -4,7 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Abune.Shared.Message
+#pragma warning disable CA1716
+namespace Abune.Shared.Message.Contract
 {
     /// <summary>Implementation can be reached by area id.</summary>
     public interface ICanRouteToArea

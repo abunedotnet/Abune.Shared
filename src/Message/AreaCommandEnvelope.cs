@@ -3,11 +3,13 @@
 // Copyright (c) Thomas Stollenwerk (motmot80). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 #pragma warning disable CA1716
 
 namespace Abune.Shared.Message
 {
     using System.IO;
+    using Abune.Shared.Message.Contract;
 
     /// <summary>Envelope for area commands.</summary>
     public class AreaCommandEnvelope : ICanRouteToArea, ICanRouteToObject

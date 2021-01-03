@@ -12,6 +12,7 @@ namespace Abune.Shared.Util
     using System.IO;
     using Abune.Shared.Command;
     using Abune.Shared.Message;
+    using Abune.Shared.Message.Contract;
     using Abune.Shared.Protocol;
 
     /// <summary>Reliable udp messaging supporting QoS 0, 1 and 2.</summary>

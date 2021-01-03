@@ -5,7 +5,6 @@
 //-----------------------------------------------------------------------
 
 #pragma warning disable CA1716
-
 namespace Abune.Shared.Command
 {
     using System;
@@ -38,23 +37,16 @@ namespace Abune.Shared.Command
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseCommand"/> class.
         /// </summary>
-        /// <param name="type">Type of command.</param>
-        public BaseCommand(CommandType type)
+        /// <param name="type">The type of command.</param>
+        /// <param name="priority">The priority.</param>
+        /// <param name="flags">The flags.</param>
+        /// <param name="quorumHash">The quorum hash.</param>
+        protected BaseCommand(CommandType type, byte priority = 0, CommandFlags flags = CommandFlags.None, ulong quorumHash = 0)
         {
             this.Type = type;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseCommand"/> class.
-        /// </summary>
-        /// <param name="priority">Command priority.</param>
-        /// <param name="type">Command type.</param>
-        /// <param name="commandBody">Body payload of command.</param>
-        public BaseCommand(byte priority, CommandType type, byte[] commandBody)
-        {
             this.Priority = priority;
-            this.Type = type;
-            this.Body = commandBody;
+            this.Flags = flags;
+            this.QuorumHash = quorumHash;
         }
 
         /// <summary>
@@ -72,6 +64,22 @@ namespace Abune.Shared.Command
         /// </summary>
         #pragma warning disable CA1819 // code efficiency
         public byte[] Body { get; protected set; }
+
+        /// <summary>
+        /// Gets the flags.
+        /// </summary>
+        /// <value>
+        /// The flags.
+        /// </value>
+        public CommandFlags Flags { get; private set; }
+
+        /// <summary>
+        /// Gets the quorum hash.
+        /// </summary>
+        /// <value>
+        /// The quorum hash.
+        /// </value>
+        public ulong QuorumHash { get; private set; }
 
         /// <summary>
         /// Serializes this instance.
@@ -104,8 +112,31 @@ namespace Abune.Shared.Command
 
             bw.Write((byte)this.Priority);
             bw.Write((uint)this.Type);
+            bw.Write((byte)this.Flags);
+            if ((this.Flags & CommandFlags.QuorumRequest) != 0)
+            {
+                bw.Write(this.QuorumHash);
+            }
+
             bw.Write((uint)this.Body.Length);
             bw.Write(this.Body);
+        }
+
+        /// <summary>
+        /// Copies properties from other command.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        public void CopyFrom(BaseCommand command)
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
+            this.Priority = command.Priority;
+            this.Flags = command.Flags;
+            this.QuorumHash = command.QuorumHash;
+            this.Body = command.Body;
         }
 
         /// <summary>
@@ -224,8 +255,14 @@ namespace Abune.Shared.Command
 
             this.Priority = br.ReadByte();
             this.Type = (CommandType)br.ReadUInt32();
-            uint bodylength = br.ReadUInt32();
-            this.Body = br.ReadBytes((int)bodylength);
+            this.Flags = (CommandFlags)br.ReadByte();
+            if ((this.Flags & CommandFlags.QuorumRequest) != 0)
+            {
+                this.QuorumHash = br.ReadUInt64();
+            }
+
+            uint bodyLength = br.ReadUInt32();
+            this.Body = br.ReadBytes((int)bodyLength);
         }
     }
 }

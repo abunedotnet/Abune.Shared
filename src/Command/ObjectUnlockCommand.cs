@@ -36,7 +36,7 @@ namespace Abune.Shared.Command
                 throw new NotSupportedException($"Type {command.Type} not supported.");
             }
 
-            this.Body = command.Body;
+            this.CopyFrom(command);
             using (MemoryStream stream = new MemoryStream(this.Body))
             {
                 using (BinaryReader br = new BinaryReader(stream))

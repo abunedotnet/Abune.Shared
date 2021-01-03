@@ -9,10 +9,11 @@ namespace Abune.Shared.Message
     using System;
     using System.IO;
     using Abune.Shared.Command;
+    using Abune.Shared.Message.Contract;
     using Abune.Shared.Protocol;
 
     /// <summary>Transport envelope for object commands.</summary>
-    public class ObjectCommandEnvelope : ICanRouteToObject
+    public class ObjectCommandEnvelope : ICanRouteToObject, ICanQuorumVote
     {
         /// <summary>Initializes a new instance of the <see cref="ObjectCommandEnvelope" /> class.</summary>
         /// <param name="senderId">The sender identifier.</param>
@@ -59,6 +60,22 @@ namespace Abune.Shared.Message
         /// <summary>Gets the command.</summary>
         /// <value>The command.</value>
         public BaseCommand Command { get; private set; }
+
+        /// <summary>
+        /// Gets the voter identifier.
+        /// </summary>
+        /// <value>
+        /// The voter identifier.
+        /// </value>
+        public uint QuorumVoterId => this.SenderId;
+
+        /// <summary>
+        /// Gets the quorum hash.
+        /// </summary>
+        /// <value>
+        /// The quorum hash.
+        /// </value>
+        public ulong QuorumHash => this.Command.QuorumHash;
 
         /// <summary>Serializes this instance.</summary>
         /// <returns>Byte serialized instance.</returns>

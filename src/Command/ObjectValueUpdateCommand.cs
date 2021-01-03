@@ -36,7 +36,7 @@ namespace Abune.Shared.Command
                 throw new NotSupportedException($"Type {command.Type} not supported.");
             }
 
-            this.Body = command.Body;
+            this.CopyFrom(command);
             using (MemoryStream stream = new MemoryStream(this.Body))
             {
                 using (BinaryReader br = new BinaryReader(stream))
@@ -56,9 +56,11 @@ namespace Abune.Shared.Command
         /// <param name="objectId">The object identifier.</param>
         /// <param name="valueId">The value identifier.</param>
         /// <param name="data">The data.</param>
+        /// <param name="commandFlags">The command flags.</param>
+        /// <param name="quorumHash">The quorum hash.</param>
         /// <exception cref="ArgumentNullException">Data is null.</exception>
-        public ObjectValueUpdateCommand(ulong objectId, uint valueId, byte[] data)
-            : base(CommandType.ObjectValueUpdate)
+        public ObjectValueUpdateCommand(ulong objectId, uint valueId, byte[] data, CommandFlags commandFlags = CommandFlags.None, ulong quorumHash = 0)
+            : base(CommandType.ObjectValueUpdate, flags: commandFlags, quorumHash: quorumHash)
         {
             if (data == null)
             {
