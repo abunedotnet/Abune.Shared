@@ -43,6 +43,7 @@ namespace Abune.Shared.Command
                 using (BinaryReader br = new BinaryReader(stream))
                 {
                     this.EventType = br.ReadUInt16();
+                    this.EventId = br.ReadUInt64();
                     this.TargetPosition = ReadVector3(br);
                     this.FrameTick = br.ReadUInt64();
                     int length = br.ReadInt32();
@@ -56,14 +57,16 @@ namespace Abune.Shared.Command
 
         /// <summary>Initializes a new instance of the <see cref="EventPointCommand" /> class.</summary>
         /// <param name="eventType">The event type.</param>
+        /// <param name="eventId">The event id.</param>
         /// <param name="targetPosition">The target position.</param>
         /// <param name="frameTick">The frame tick.</param>
         /// <param name="data">The data.</param>
         /// <exception cref="ArgumentNullException">Data is null.</exception>
-        public EventPointCommand(ushort eventType, AVector3 targetPosition, ulong frameTick, byte[] data)
+        public EventPointCommand(ushort eventType, ulong eventId, AVector3 targetPosition, ulong frameTick, byte[] data)
             : base(CommandType.EventPoint)
         {
             this.EventType = eventType;
+            this.EventId = eventId;
             this.TargetPosition = targetPosition;
             this.FrameTick = frameTick;
             this.Data = data ?? throw new ArgumentNullException(nameof(data));
@@ -72,6 +75,7 @@ namespace Abune.Shared.Command
                 using (BinaryWriter bw = new BinaryWriter(stream))
                 {
                     bw.Write(this.EventType);
+                    bw.Write(this.EventId);
                     Write(bw, this.TargetPosition);
                     bw.Write(this.FrameTick);
                     bw.Write(this.Data.Length);
@@ -86,6 +90,10 @@ namespace Abune.Shared.Command
         /// <summary>Gets or sets the event type.</summary>
         /// <value>The object identifier.</value>
         public ushort EventType { get; set; }
+
+        /// <summary>Gets or sets the event id.</summary>
+        /// <value>The event id.</value>
+        public ulong EventId { get; set; }
 
         /// <summary>Gets or sets the frame tick.</summary>
         /// <value>The frame tick when the event occured/will occur.</value>
